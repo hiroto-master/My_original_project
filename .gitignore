@@ -1,0 +1,60 @@
+# =============== #
+# Unity generated  #
+# =============== #
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+[Uu]serSettings/
+UnityGenerated/
+Assets/AssetStoreTools*
+
+# ================================ #
+# Visual Studio / MonoDevelop etc. #
+# ================================ #
+.vs/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.userprefs
+*.user
+*.pidb
+*.booproj
+*.tmp
+*.pdb
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# ============ #
+# Build output #
+# ============ #
+*.apk
+*.unitypackage
+*.unity3d
+*.html
+
+# ============ #
+# Logs & Crash #
+# ============ #
+*.log
+sysinfo.txt
+
+# ============ #
+# Python cache #
+# ============ #
+*.pyc
