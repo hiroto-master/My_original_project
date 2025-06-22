@@ -5,6 +5,7 @@ public class FPCameraLook : MonoBehaviour
     private FirstPersonController controller;
     private Transform cameraRoot;
     public Camera playerCamera;
+    public FPMovement FPMovement;
 
     [Header("Look")]
     [SerializeField, Range(1, 10)] private float lookSpeed = 2.0f;
@@ -19,6 +20,7 @@ public class FPCameraLook : MonoBehaviour
 
     private void Update()
     {
+        if (FPMovement.isOpenInventory) return;
         Vector2 delta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         Vector3 euler = transform.eulerAngles;
 

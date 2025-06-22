@@ -34,11 +34,15 @@ public class FPMovement : MonoBehaviour
         {
             isOpenInventory = true;
             inventoryPanel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else if(Input.GetKeyDown(KeyCode.E) && isOpenInventory)
         {
             isOpenInventory = false;
             inventoryPanel.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         var currentInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         Vector3 horizontalMovementVelocity = transform.TransformDirection(new Vector3(currentInput.x, 0, currentInput.y));
