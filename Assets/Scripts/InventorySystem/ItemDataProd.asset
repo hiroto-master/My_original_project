@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095b802984e89d74fa97ee2cd15dc5b3, type: 3}
+  m_Name: ItemDataProd
+  m_EditorClassIdentifier: 
+  ItemData:
+  - _itemName: "\u30E1\u30ED\u30F3"
+    _introduceText: "\u3053\u308C\u306F\u305F\u3060\u306E\u30E1\u30ED\u30F3"
+    _itemId: melon
+    _itemImage: {fileID: 0}
+    _count: 0
+  - _itemName: "\u30D1\u30A4\u30CA\u30C3\u30D7\u30EB"
+    _introduceText: "\u3053\u308C\u306F\u305F\u3060\u306E\u30E1\u30ED\u30F3"
+    _itemId: melon
+    _itemImage: {fileID: 0}
+    _count: 0
+  - _itemName: "\u30EA\u30F3\u30B4"
+    _introduceText: "\u3053\u308C\u306F\u305F\u3060\u306E\u30E1\u30ED\u30F3"
+    _itemId: melon
+    _itemImage: {fileID: 0}
+    _count: 0
