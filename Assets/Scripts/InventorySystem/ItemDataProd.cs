@@ -8,7 +8,7 @@ public class ItemDataProd : ScriptableObject
 }
 
 [System.Serializable]
-public class Item
+public class Item //V‚µ‚¢Œ^‚ðì‚é@‘S‚Ä‚Ìî•ñ‚Ì“ü‚Á‚½Œ^
 {
     [SerializeField]private string _itemName;
     public string ItemName => _itemName;

@@ -1,24 +1,25 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryProd : MonoBehaviour
 {
-    [SerializeField] ItemDataProd itemDataProd;
+    [SerializeField] ItemDataProd itemDataProd;//アイテムデータのすべての要素を持つ
 
     [SerializeField] Text itemNameText;
     [SerializeField] Text introduceText;
 
-    public List<int> inventoryItems = new List<int>();
+    public List<string> haveItemId = new List<string>();//取得したときにアイテムのIdを入れる
 
     private int showItemNum = 0;
     public FPMovement FPMovement;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log("currentID:" + inventoryItems[showItemNum]);
-        UpdateText(inventoryItems[showItemNum]);
+        showItemNum = 0;
+        UpdateText(haveItemId[showItemNum]);//ゲットしたアイテムのすべての情報
     }
     private void Update()
     {
@@ -34,26 +35,25 @@ public class InventoryProd : MonoBehaviour
     public void OnClickNextButton()
     {
         showItemNum++;
-        if (showItemNum > inventoryItems.Count - 1)
+        if (showItemNum > haveItemId.Count - 1)
         {
             showItemNum = 0;
         }
-        Debug.Log("currentID:" + inventoryItems[showItemNum]);
-        UpdateText(inventoryItems[showItemNum]);
+        UpdateText(haveItemId[showItemNum]);//アイテムの名前を入れる
     }
     public void OnClickBackButton()
     {
         showItemNum--;
         if (showItemNum < 0)
         {
-            showItemNum = inventoryItems.Count - 1;
+            showItemNum = haveItemId.Count - 1;
         }
-        Debug.Log("currentID:" + inventoryItems[showItemNum]);
-        UpdateText(inventoryItems[showItemNum]);
+        UpdateText(haveItemId[showItemNum]);
     }
-    private void UpdateText(int itemNum)
+    private void UpdateText(string itemId)
     {
-        itemNameText.text = itemDataProd.ItemData[itemNum].ItemName;
-        introduceText.text = itemDataProd.ItemData[itemNum].IntroduceText;
+        Item itemInfo = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == itemId);
+        itemNameText.text = itemInfo.ItemName;
+        introduceText.text = itemInfo.IntroduceText;
     }
 }
