@@ -16,15 +16,15 @@ MonoBehaviour:
   - _itemName: "\u30E1\u30ED\u30F3"
     _introduceText: "\u3053\u308C\u306F\u305F\u3060\u306E\u30E1\u30ED\u30F3"
     _itemId: melon
-    _itemImage: {fileID: 0}
+    _itemImage: {fileID: 6625637479140283096, guid: aae2cb12dff5ab740b18e44719572eee, type: 3}
     _count: 0
   - _itemName: "\u30D1\u30A4\u30CA\u30C3\u30D7\u30EB"
     _introduceText: "\u3053\u308C\u306F\u305F\u3060\u306E\u30D1\u30A4\u30CA\u30C3\u30D7\u30EB"
     _itemId: pineapple
-    _itemImage: {fileID: 0}
+    _itemImage: {fileID: 3443630799267784247, guid: 9f607dc8c492f974792bdc58ab2f6798, type: 3}
     _count: 0
   - _itemName: "\u30EA\u30F3\u30B4"
-    _introduceText: "\u3053\u308C\u306F\u305F\u3060\u306E\u30D1\u30A4\u30CA\u30C3\u30D7\u30EB"
+    _introduceText: "\u3053\u308C\u306F\u305F\u3060\u306E\u30EA\u30F3\u30B4"
     _itemId: apple
-    _itemImage: {fileID: 0}
+    _itemImage: {fileID: 5623718544377791591, guid: 7d1a6475834b8284da57bd6952f8645a, type: 3}
     _count: 0

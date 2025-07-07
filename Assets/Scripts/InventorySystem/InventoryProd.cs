@@ -6,20 +6,24 @@ using UnityEngine.UI;
 
 public class InventoryProd : MonoBehaviour
 {
-    [SerializeField] ItemDataProd itemDataProd;//ƒAƒCƒeƒ€ƒf[ƒ^‚Ì‚·‚×‚Ä‚Ì—v‘f‚ğ‚Â
+    [SerializeField] ItemDataProd itemDataProd;//ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Ì‚ï¿½ï¿½×‚Ä‚Ì—vï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     [SerializeField] Text itemNameText;
     [SerializeField] Text introduceText;
 
-    public List<string> haveItemId = new List<string>();//æ“¾‚µ‚½‚Æ‚«‚ÉƒAƒCƒeƒ€‚ÌId‚ğ“ü‚ê‚é
+    public List<string> haveItemId = new List<string>();//ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ÉƒAï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½Idï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     private int showItemNum = 0;
     public FPMovement FPMovement;
+
+    public Transform instansPos;
+
+    private GameObject previewObj = null;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         showItemNum = 0;
-        UpdateText(haveItemId[showItemNum]);//ƒQƒbƒg‚µ‚½ƒAƒCƒeƒ€‚Ì‚·‚×‚Ä‚Ìî•ñ
+        UpdateText(haveItemId[showItemNum]);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ID
     }
     private void Update()
     {
@@ -39,7 +43,7 @@ public class InventoryProd : MonoBehaviour
         {
             showItemNum = 0;
         }
-        UpdateText(haveItemId[showItemNum]);//ƒAƒCƒeƒ€‚Ì–¼‘O‚ğ“ü‚ê‚é
+        UpdateText(haveItemId[showItemNum]);//ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ì–ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
     public void OnClickBackButton()
     {
@@ -55,5 +59,10 @@ public class InventoryProd : MonoBehaviour
         Item itemInfo = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == itemId);
         itemNameText.text = itemInfo.ItemName;
         introduceText.text = itemInfo.IntroduceText;
+        if (previewObj != null)
+        {
+            Destroy(previewObj);
+        }
+        previewObj = Instantiate(itemInfo.ItemImage,instansPos.position,itemInfo.ItemImage.transform.rotation);
     }
 }
