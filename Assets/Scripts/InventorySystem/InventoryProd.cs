@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 public class InventoryProd : MonoBehaviour
 {
-    [SerializeField] ItemDataProd itemDataProd;//�A�C�e���f�[�^�̂��ׂĂ̗v�f������
+    [SerializeField] ItemDataProd itemDataProd;//アイテムデータ全ての要素が入っている
 
     [SerializeField] Text itemNameText;
     [SerializeField] Text introduceText;
+    [SerializeField] private Text haveItemCountText;
 
-    public List<string> haveItemId = new List<string>();//�擾�����Ƃ��ɃA�C�e����Id������
+    public List<string> haveItemId = new List<string>();//取得した時にアイテムのIdを入れる
 
     private int showItemNum = 0;
     public FPMovement FPMovement;
@@ -23,7 +24,7 @@ public class InventoryProd : MonoBehaviour
     void Start()
     {
         showItemNum = 0;
-        UpdateText(haveItemId[showItemNum]);//���������A�C�e����ID
+        UpdateText(haveItemId[showItemNum]);//取得したアイテムID
     }
     private void Update()
     {
@@ -43,7 +44,7 @@ public class InventoryProd : MonoBehaviour
         {
             showItemNum = 0;
         }
-        UpdateText(haveItemId[showItemNum]);//�A�C�e���̖��O������
+        UpdateText(haveItemId[showItemNum]);//アイテムの名前を入れる
     }
     public void OnClickBackButton()
     {
@@ -59,6 +60,7 @@ public class InventoryProd : MonoBehaviour
         Item itemInfo = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == itemId);
         itemNameText.text = itemInfo.ItemName;
         introduceText.text = itemInfo.IntroduceText;
+        haveItemCountText.text = showItemNum+1 +  "/" + haveItemId.Count;
         if (previewObj != null)
         {
             Destroy(previewObj);

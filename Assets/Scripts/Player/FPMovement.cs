@@ -1,4 +1,9 @@
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
+using UnityEngine.UI;
+using Image = UnityEngine.UI.Image;
 
 public class FPMovement : MonoBehaviour
 {
@@ -7,23 +12,29 @@ public class FPMovement : MonoBehaviour
     public float MovementSpeed => movementSpeed;
     [SerializeField] private float gravity = -9.81f;
     public float Gravity => gravity;
-
-    private Vector3 velocity = Vector3.zero;
+    private float sprintInterval = 2;
     public Vector3 Velocity
     {
         get => velocity;
         set => velocity = value;
     }
     private FirstPersonController controller;
-
+    private Vector3 velocity = Vector3.zero;
+    
     public GameObject inventoryPanel;
     public bool isOpenInventory = false;
+    
+    private float sprintSpeed = 1;
+    
+    public Image sprintGaugeImage;
+    
+    private float sprintTime = 5;
+    private bool isCountSprintTime = false;
     private void Start()
     {
         inventoryPanel.SetActive(false);
         isOpenInventory = false;
     }
-
     public void Initialize(FirstPersonController controller)
     {
         this.controller = controller;
@@ -46,7 +57,8 @@ public class FPMovement : MonoBehaviour
         }
         var currentInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         Vector3 horizontalMovementVelocity = transform.TransformDirection(new Vector3(currentInput.x, 0, currentInput.y));
-        horizontalMovementVelocity *= movementSpeed;
+        horizontalMovementVelocity = horizontalMovementVelocity * movementSpeed * sprintSpeed;
+        
 
         Vector3 verticalMovementVelocity = new Vector3(0, velocity.y, 0);
         if (!controller.CharacterController.isGrounded || 0f < verticalMovementVelocity.y)
@@ -58,8 +70,42 @@ public class FPMovement : MonoBehaviour
             verticalMovementVelocity.y = gravity * 0.1f;
         }
         velocity = horizontalMovementVelocity + verticalMovementVelocity;
-        if(isOpenInventory)return;//�v���C���[�𓮂��Ȃ��悤�ɂ���
+        if(isOpenInventory)return;//インベントリを開いている時に処理を行わない
         controller.CharacterController.Move(velocity * Time.deltaTime);
 
+        //sprintを変更する処理
+        if (Input.GetKeyDown(KeyCode.LeftShift) && sprintTime > 0)
+        {
+            sprintSpeed = 2;
+            isCountSprintTime = true;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift) || sprintTime <= 0)
+        {
+            sprintSpeed = 1;
+            isCountSprintTime = false;
+        }
+        //スプリントタイムを減らす処理
+        if (isCountSprintTime == true)
+        {
+            sprintTime -= Time.deltaTime; 
+            sprintGaugeImage.fillAmount = sprintTime/5;
+            sprintInterval = 2;
+        }
+        else if (isCountSprintTime == false)//スプリントの回復
+        {
+            if (sprintInterval >= 0)
+            {
+                sprintInterval -= Time.deltaTime;
+            }
+            
+        }
+
+        if (sprintInterval <= 0)
+        {
+            if (sprintTime > 5) return;
+            sprintTime += Time.deltaTime;
+            sprintGaugeImage.fillAmount = sprintTime/5;
+        }
+        Debug.Log(sprintInterval);
     }
 }
