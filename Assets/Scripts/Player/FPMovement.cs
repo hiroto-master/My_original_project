@@ -12,7 +12,7 @@ public class FPMovement : MonoBehaviour
     public float MovementSpeed => movementSpeed;
     [SerializeField] private float gravity = -9.81f;
     public float Gravity => gravity;
-    private float sprintInterval = 2;
+
     public Vector3 Velocity
     {
         get => velocity;
@@ -28,8 +28,10 @@ public class FPMovement : MonoBehaviour
     
     public Image sprintGaugeImage;
     
-    private float sprintTime = 5;
-    private bool isCountSprintTime = false;
+    private float sprintTime = 5;//ダッシュすることのできる時間
+    private bool isCountSprintTime = false;//スプリントタイムを減らすか減らさないか
+    private float sprintInterval = 2;　//回復すまでの待機時間
+    private float deactiveGaugeTime = 1;
     private void Start()
     {
         inventoryPanel.SetActive(false);
@@ -87,25 +89,41 @@ public class FPMovement : MonoBehaviour
         //スプリントタイムを減らす処理
         if (isCountSprintTime == true)
         {
+            sprintGaugeImage.gameObject.SetActive(true);
             sprintTime -= Time.deltaTime; 
             sprintGaugeImage.fillAmount = sprintTime/5;
             sprintInterval = 2;
+            deactiveGaugeTime = 1;
         }
         else if (isCountSprintTime == false)//スプリントの回復
         {
-            if (sprintInterval >= 0)
+            if (sprintInterval >= 0)//sprintIntervalが減りすぎないようにするため
             {
                 sprintInterval -= Time.deltaTime;
-            }
-            
-        }
+            } 
+            if (sprintInterval <= 0)
+            {
+                if (sprintTime <= 5)
+                {
+                    sprintTime += Time.deltaTime;
+                    sprintGaugeImage.fillAmount = sprintTime/5;
+                }
 
-        if (sprintInterval <= 0)
-        {
-            if (sprintTime > 5) return;
-            sprintTime += Time.deltaTime;
-            sprintGaugeImage.fillAmount = sprintTime/5;
+            }
         }
-        Debug.Log(sprintInterval);
+        //体力ゲージの表示、非表示
+        if (sprintTime >= 5)
+        {
+            if (deactiveGaugeTime > 0)
+            {
+                deactiveGaugeTime -= Time.deltaTime;
+            }
+
+            if (deactiveGaugeTime <= 0)
+            {
+                sprintGaugeImage.gameObject.SetActive(false);
+            }
+        }      
+        Debug.Log(deactiveGaugeTime);
     }
 }
