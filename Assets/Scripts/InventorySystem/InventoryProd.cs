@@ -10,8 +10,8 @@ public class InventoryProd : MonoBehaviour
 
     [SerializeField] Text itemNameText;
     [SerializeField] Text introduceText;
-    [SerializeField] private Text haveItemCountText;
-
+    [SerializeField] private Text itemNumberText;
+    [SerializeField] private Text itemCountText;
     public List<string> haveItemId = new List<string>();//取得した時にアイテムのIdを入れる
 
     private int showItemNum = 0;
@@ -28,6 +28,10 @@ public class InventoryProd : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            UpdateText(haveItemId[showItemNum]);
+        }
         if (Input.GetKeyDown(KeyCode.A) && FPMovement.isOpenInventory)
         {
             OnClickBackButton();
@@ -57,10 +61,11 @@ public class InventoryProd : MonoBehaviour
     }
     private void UpdateText(string itemId)
     {
-        Item itemInfo = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == itemId);
+        Item itemInfo = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == itemId);//idからアイテムを探す
         itemNameText.text = itemInfo.ItemName;
         introduceText.text = itemInfo.IntroduceText;
-        haveItemCountText.text = showItemNum+1 +  "/" + haveItemId.Count;
+        itemNumberText.text = showItemNum+1 +  "/" + haveItemId.Count;
+        itemCountText.text = "所持数：" + itemInfo.ItemCount;
         if (previewObj != null)
         {
             Destroy(previewObj);

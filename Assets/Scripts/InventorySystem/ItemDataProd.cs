@@ -8,7 +8,7 @@ public class ItemDataProd : ScriptableObject
 }
 
 [System.Serializable]
-public class Item //V‚µ‚¢Œ^‚ðì‚é@‘S‚Ä‚Ìî•ñ‚Ì“ü‚Á‚½Œ^
+public class Item //ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½Sï¿½Ä‚Ìï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½^
 {
     [SerializeField]private string _itemName;
     public string ItemName => _itemName;
@@ -22,6 +22,10 @@ public class Item //V‚µ‚¢Œ^‚ðì‚é@‘S‚Ä‚Ìî•ñ‚Ì“ü‚Á‚½Œ^
     [SerializeField]private GameObject _itemImage;
     public GameObject ItemImage => _itemImage;
 
-    [SerializeField]private int _count;
-    public int Count => _count;
+    [SerializeField]private int _itemcount;
+    public int ItemCount
+    {
+        get => _itemcount;
+        set => _itemcount = value;
+    }
 }

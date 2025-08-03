@@ -76,12 +76,12 @@ public class FPMovement : MonoBehaviour
         controller.CharacterController.Move(velocity * Time.deltaTime);
 
         //sprintを変更する処理
-        if (Input.GetKeyDown(KeyCode.LeftShift) && sprintTime > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && sprintTime > 0 && Input.GetKey(KeyCode.W))
         {
             sprintSpeed = 2;
             isCountSprintTime = true;
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift) || sprintTime <= 0)
+        if (Input.GetKeyUp(KeyCode.LeftShift) || sprintTime <= 0 || Input.GetKeyUp(KeyCode.W))
         {
             sprintSpeed = 1;
             isCountSprintTime = false;
