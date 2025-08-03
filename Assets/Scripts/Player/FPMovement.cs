@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -32,6 +33,11 @@ public class FPMovement : MonoBehaviour
     private bool isCountSprintTime = false;//スプリントタイムを減らすか減らさないか
     private float sprintInterval = 2;　//回復すまでの待機時間
     private float deactiveGaugeTime = 1;
+    
+    //item関連
+    public bool isUseEnergy = false;
+    private float usingTime = 0;
+    public bool onece = false;
     private void Start()
     {
         inventoryPanel.SetActive(false);
@@ -45,6 +51,7 @@ public class FPMovement : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E) && !isOpenInventory)
         {
+            Time.timeScale = 0;//時間を止める
             isOpenInventory = true;
             inventoryPanel.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
@@ -52,6 +59,7 @@ public class FPMovement : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.E) && isOpenInventory)
         {
+            Time.timeScale = 1;
             isOpenInventory = false;
             inventoryPanel.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
@@ -75,12 +83,36 @@ public class FPMovement : MonoBehaviour
         if(isOpenInventory)return;//インベントリを開いている時に処理を行わない
         controller.CharacterController.Move(velocity * Time.deltaTime);
 
-        //sprintを変更する処理
-        if (Input.GetKey(KeyCode.LeftShift) && sprintTime > 0 && Input.GetKey(KeyCode.W))
+        if (usingTime > 0)
+        {
+            usingTime -= Time.deltaTime;
+            Debug.Log(usingTime);
+            if (usingTime <= 0)
+            {
+                isUseEnergy = false;
+            }
+        }
+       
+        
+        
+        //sprintを変更する処理・通常処理
+        if (Input.GetKey(KeyCode.LeftShift) && sprintTime > 0 && Input.GetKey(KeyCode.W) && !isUseEnergy)
+        {
+            //もしenergyを使っていれば
+               sprintSpeed = 2;
+               isCountSprintTime = true; 
+        }
+        //アイテム使用時
+        if (Input.GetKey(KeyCode.LeftShift) && sprintTime > 0 && Input.GetKey(KeyCode.W) && isUseEnergy)
         {
             sprintSpeed = 2;
-            isCountSprintTime = true;
+            if (onece) //一度だけ実行するbool
+            {
+                usingTime = 10;
+                onece = false;
+            } 
         }
+        
         if (Input.GetKeyUp(KeyCode.LeftShift) || sprintTime <= 0 || Input.GetKeyUp(KeyCode.W))
         {
             sprintSpeed = 1;
@@ -124,6 +156,6 @@ public class FPMovement : MonoBehaviour
                 sprintGaugeImage.gameObject.SetActive(false);
             }
         }      
-        Debug.Log(deactiveGaugeTime);
+        //Debug.Log(deactiveGaugeTime);
     }
 }

@@ -15,11 +15,14 @@ public class InventoryProd : MonoBehaviour
     public List<string> haveItemId = new List<string>();//取得した時にアイテムのIdを入れる
 
     private int showItemNum = 0;
-    public FPMovement FPMovement;
+    
+    public FPMovement FPMovement;//プレイヤーの動作関連のスクリプト
 
     public Transform instansPos;
 
     private GameObject previewObj = null;
+    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,6 +42,11 @@ public class InventoryProd : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D) && FPMovement.isOpenInventory)
         {
             OnClickNextButton();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F) && FPMovement.isOpenInventory)
+        {
+            UseItem();
         }
     }
     public void OnClickNextButton()
@@ -71,5 +79,25 @@ public class InventoryProd : MonoBehaviour
             Destroy(previewObj);
         }
         previewObj = Instantiate(itemInfo.ItemImage,instansPos.position,itemInfo.ItemImage.transform.rotation);
+    }
+
+    private void UseItem()
+    {
+        switch (haveItemId[showItemNum])
+        {
+            case "apple":
+                Debug.Log("apple");
+                break;
+            case "melon":
+                Debug.Log("melon");
+                FPMovement.isUseEnergy = true;
+                FPMovement.onece = true;
+                break;
+            case "pineapple":
+                Debug.Log("pineapple");
+                break;
+            default:
+                break;
+        }
     }
 }
