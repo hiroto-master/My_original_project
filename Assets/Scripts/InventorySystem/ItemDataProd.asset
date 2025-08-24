@@ -13,18 +13,13 @@ MonoBehaviour:
   m_Name: ItemDataProd
   m_EditorClassIdentifier: 
   ItemData:
-  - _itemName: "\u30E1\u30ED\u30F3"
-    _introduceText: "\u3068\u3066\u3082\u304A\u3044\u3057\u3044\u30E1\u30ED\u30F3\u3067\u3059"
-    _itemId: melon
-    _itemImage: {fileID: 5623718544377791591, guid: 7d1a6475834b8284da57bd6952f8645a, type: 3}
+  - _itemName: "\u9664\u970A\u30DE\u30B9\u30BF\u30FC"
+    _introduceText: "\u6700\u5F37\u306E\u9664\u970A\u5264\u3002\u76EE\u306E\u524D\u306E\u970A\u3092\u6D88\u3057\u53BB\u308B\u3002"
+    _itemId: zyoreimaster
+    _itemImage: {fileID: 6805625676342873659, guid: 689eff70082b6f346a30a4b8aa02908c, type: 3}
     _itemcount: 0
-  - _itemName: "\u30D1\u30A4\u30CA\u30C3\u30D7\u30EB"
-    _introduceText: "\u3053\u308C\u306F\u305F\u3060\u306E\u30D1\u30A4\u30CA\u30C3\u30D7\u30EB"
-    _itemId: pineapple
-    _itemImage: {fileID: 6625637479140283096, guid: aae2cb12dff5ab740b18e44719572eee, type: 3}
-    _itemcount: 0
-  - _itemName: "\u30EA\u30F3\u30B4"
-    _introduceText: "\u3053\u308C\u306F\u305F\u3060\u306E\u30EA\u30F3\u30B4"
-    _itemId: apple
-    _itemImage: {fileID: 3443630799267784247, guid: 9f607dc8c492f974792bdc58ab2f6798, type: 3}
+  - _itemName: "\u30A8\u30CA\u30B8\u30FC\u30C9\u30EA\u30F3\u30AF"
+    _introduceText: "\u8D70\u308A\u51FA\u3057\u3066\u304B\u308910\u79D2\u9593\u30B9\u30BF\u30DF\u30CA\u304C\u6E1B\u3089\u306A\u3044\u3002"
+    _itemId: energy
+    _itemImage: {fileID: 4273497412501116116, guid: 62df6833677107044baea0e8e0a746ff, type: 3}
     _itemcount: 0

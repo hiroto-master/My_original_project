@@ -38,6 +38,8 @@ public class FPMovement : MonoBehaviour
     public bool isUseEnergy = false;
     private float usingTime = 0;
     public bool onece = false;
+    
+    public ParticleSystem waterParticles;
     private void Start()
     {
         inventoryPanel.SetActive(false);
@@ -49,7 +51,8 @@ public class FPMovement : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E) && !isOpenInventory)
+        //インベントリ―を開く
+        if(Input.GetKeyDown(KeyCode.Tab) && !isOpenInventory)
         {
             Time.timeScale = 0;//時間を止める
             isOpenInventory = true;
@@ -57,13 +60,9 @@ public class FPMovement : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        else if(Input.GetKeyDown(KeyCode.E) && isOpenInventory)
+        else if(Input.GetKeyDown(KeyCode.Tab) && isOpenInventory)
         {
-            Time.timeScale = 1;
-            isOpenInventory = false;
-            inventoryPanel.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            CloseInventory();
         }
         var currentInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         Vector3 horizontalMovementVelocity = transform.TransformDirection(new Vector3(currentInput.x, 0, currentInput.y));
@@ -157,5 +156,14 @@ public class FPMovement : MonoBehaviour
             }
         }      
         //Debug.Log(deactiveGaugeTime);
+    }
+
+    public void CloseInventory()
+    {   
+        Time.timeScale = 1;
+        isOpenInventory = false;
+        inventoryPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

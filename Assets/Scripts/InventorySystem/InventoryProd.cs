@@ -22,7 +22,11 @@ public class InventoryProd : MonoBehaviour
 
     private GameObject previewObj = null;
     
-    
+    private string currentEquipmentItem = null;
+
+    public Transform cameraroot;//装備するときの親のオブジェクト
+    private GameObject equipmentItem = null;//手に持っているアイテム
+    public ParticleSystem particle;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,7 +35,7 @@ public class InventoryProd : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             UpdateText(haveItemId[showItemNum]);
         }
@@ -44,7 +48,13 @@ public class InventoryProd : MonoBehaviour
             OnClickNextButton();
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && FPMovement.isOpenInventory)
+        if (Input.GetKeyDown(KeyCode.E) && FPMovement.isOpenInventory)
+        {
+            //アイテムを装備する
+            EquipmentItem();
+        }
+
+        if (Input.GetMouseButton(0) && !FPMovement.isOpenInventory)
         {
             UseItem();
         }
@@ -80,21 +90,41 @@ public class InventoryProd : MonoBehaviour
         }
         previewObj = Instantiate(itemInfo.ItemImage,instansPos.position,itemInfo.ItemImage.transform.rotation);
     }
-
+    public void EquipmentItem()//アイテムを装備するスクリプト
+    {
+        currentEquipmentItem = haveItemId[showItemNum];//appleなどが入る
+        if (equipmentItem !=null)Destroy(equipmentItem);//表示しているものを削除
+        Item itemInfo = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == currentEquipmentItem);//idからアイテムを探す
+        switch (currentEquipmentItem)
+        {
+            case "zyoreimaster":
+            {
+                equipmentItem = Instantiate(itemInfo.ItemImage,cameraroot);
+                equipmentItem.transform.localPosition = new Vector3(0.55f, -0.5f, 0.795f);
+                equipmentItem.transform.localRotation = Quaternion.Euler(0,82,0);
+                break;
+            }
+            case "energy":
+                equipmentItem = Instantiate(itemInfo.ItemImage,cameraroot);
+                equipmentItem.transform.localPosition = new Vector3(0.8f, -0.4f, 1.04f);
+                equipmentItem.transform.localRotation = Quaternion.Euler(-16.48f,224,0);
+                break;
+            default:
+                break;
+        }
+        FPMovement.CloseInventory();
+    }
     private void UseItem()
     {
-        switch (haveItemId[showItemNum])
+        switch (currentEquipmentItem)
         {
-            case "apple":
-                Debug.Log("apple");
+            case "zyoreimaster":
+                particle.Play();
                 break;
             case "melon":
                 Debug.Log("melon");
                 FPMovement.isUseEnergy = true;
                 FPMovement.onece = true;
-                break;
-            case "pineapple":
-                Debug.Log("pineapple");
                 break;
             default:
                 break;
