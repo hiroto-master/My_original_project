@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,27 +36,27 @@ public class InventoryProd : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            UpdateText(haveItemId[showItemNum]);
-        }
         if (Input.GetKeyDown(KeyCode.A) && FPMovement.isOpenInventory)
         {
+            if(haveItemId.Count == 0)return;
             OnClickBackButton();
         }
         if (Input.GetKeyDown(KeyCode.D) && FPMovement.isOpenInventory)
         {
+            if (haveItemId.Count == 0)return;
             OnClickNextButton();
         }
 
         if (Input.GetKeyDown(KeyCode.E) && FPMovement.isOpenInventory)
         {
+            if (haveItemId.Count == 0)return;
             //アイテムを装備する
             EquipmentItem();
         }
 
-        if (Input.GetMouseButton(0) && !FPMovement.isOpenInventory)
+        if (Input.GetMouseButtonDown(0) && !FPMovement.isOpenInventory)
         {
+            if (haveItemId.Count == 0)return;
             UseItem();
         }
     }
@@ -109,6 +110,11 @@ public class InventoryProd : MonoBehaviour
                 equipmentItem.transform.localPosition = new Vector3(0.8f, -0.4f, 1.04f);
                 equipmentItem.transform.localRotation = Quaternion.Euler(-16.48f,224,0);
                 break;
+            case "ohuda":
+                equipmentItem = Instantiate(itemInfo.ItemImage,cameraroot);
+                equipmentItem.transform.localPosition = new Vector3(0.82f, -0.2f, 1.046f);
+                equipmentItem.transform.localRotation = Quaternion.Euler(-80.8f,90.6f,38.7f);
+                break;
             default:
                 break;
         }
@@ -119,15 +125,61 @@ public class InventoryProd : MonoBehaviour
         switch (currentEquipmentItem)
         {
             case "zyoreimaster":
+                Item zyoreimaster = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == "zyoreimaster");
+                if (zyoreimaster.ItemCount >= 2)
+                {
+                    zyoreimaster.ItemCount -= 1;
+                }
+                else if (zyoreimaster.ItemCount == 1)
+                {
+                    zyoreimaster.ItemCount = 0;
+                    haveItemId.Remove("zyoreimaster");
+                    Destroy(equipmentItem);
+                    equipmentItem = null;
+                }
                 particle.Play();
                 break;
-            case "melon":
-                Debug.Log("melon");
+            case "energy":
+                Item energy = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == "energy");
+                if (energy.ItemCount >= 2)
+                {
+                    energy.ItemCount -= 1;
+                }
+                else if (energy.ItemCount == 1)
+                {
+                    energy.ItemCount = 0;
+                    haveItemId.Remove("energy");
+                    Destroy(equipmentItem);
+                    equipmentItem = null;
+                }
                 FPMovement.isUseEnergy = true;
                 FPMovement.onece = true;
                 break;
+            case "ohuda":
+                break;
             default:
                 break;
+        }
+    }
+
+    public void Reset()
+    {
+        if (haveItemId.Count == 0)
+        {
+            if (previewObj != null)
+            {
+                Destroy(previewObj);
+                previewObj = null;
+            }
+            itemNameText.text = "何も所持していない";
+            introduceText.text = "";
+            itemNumberText.text = "0/0";
+            itemCountText.text = "";
+        }
+        else
+        {
+            showItemNum = Mathf.Clamp(showItemNum, 0, haveItemId.Count - 1);
+            UpdateText(haveItemId[showItemNum]);
         }
     }
 }

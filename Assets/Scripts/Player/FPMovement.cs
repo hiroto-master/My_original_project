@@ -38,8 +38,8 @@ public class FPMovement : MonoBehaviour
     public bool isUseEnergy = false;
     private float usingTime = 0;
     public bool onece = false;
-    
-    public ParticleSystem waterParticles;
+
+    public InventoryProd InventoryProd;
     private void Start()
     {
         inventoryPanel.SetActive(false);
@@ -51,12 +51,13 @@ public class FPMovement : MonoBehaviour
     }
     private void Update()
     {
-        //インベントリ―を開く
+        //インベントリを開く
         if(Input.GetKeyDown(KeyCode.Tab) && !isOpenInventory)
         {
             Time.timeScale = 0;//時間を止める
             isOpenInventory = true;
             inventoryPanel.SetActive(true);
+            InventoryProd.Reset();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }

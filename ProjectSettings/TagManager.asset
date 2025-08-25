@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - eye
+  - item
   layers:
   - Default
   - TransparentFX
