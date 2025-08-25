@@ -76,7 +76,7 @@ public class FPMovement : MonoBehaviour
         }
         else
         {
-            verticalMovementVelocity.y = gravity * 0.1f;
+            verticalMovementVelocity.y = gravity * 0.5f;//もとは0.1
         }
         velocity = horizontalMovementVelocity + verticalMovementVelocity;
         if(isOpenInventory)return;//インベントリを開いている時に処理を行わない
