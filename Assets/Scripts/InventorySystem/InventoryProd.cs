@@ -198,6 +198,7 @@ public class InventoryProd : MonoBehaviour
 
     IEnumerator FadeOut()
     {
+        fadePanel.gameObject.SetActive(true);
         Color panelColor = fadePanel.color;
         panelColor.a = 0;
         fadePanel.color = panelColor;
@@ -215,6 +216,7 @@ public class InventoryProd : MonoBehaviour
     }
     IEnumerator FadeInText()
     {
+        fadeText.gameObject.SetActive(true);
         Color textColor = fadeText.color;
         textColor.a = 0;
         fadeText.color = textColor;
