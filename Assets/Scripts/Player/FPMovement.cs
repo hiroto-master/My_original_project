@@ -167,4 +167,12 @@ public class FPMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("enemy"))
+        {
+            transform.position = new Vector3(0,0,0);
+        }
+    }
 }
