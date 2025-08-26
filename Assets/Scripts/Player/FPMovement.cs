@@ -86,7 +86,7 @@ public class FPMovement : MonoBehaviour
         if (usingTime > 0)
         {
             usingTime -= Time.deltaTime;
-            Debug.Log(usingTime);
+            //Debug.Log(usingTime);
             if (usingTime <= 0)
             {
                 isUseEnergy = false;
@@ -187,7 +187,7 @@ public class FPMovement : MonoBehaviour
             InventoryProd.isGool = false;
         }
     }
-    void Damage()
+    void Damage()//敵に接触したときの処理
     {
         transform.position = new Vector3(-2.3f,1.35f,4.2f);
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,9 @@ public class InventoryProd : MonoBehaviour
     public ParticleSystem particle;//除霊マスター
 
     public bool isGool = false;//ゴールできるかの判定
+
+    [SerializeField] Image fadePanel;//フェードアウト用のパネル
+    [SerializeField] Text fadeText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Update()
     {
@@ -126,6 +130,8 @@ public class InventoryProd : MonoBehaviour
                 if (zyoreimaster.ItemCount >= 2)
                 {
                     zyoreimaster.ItemCount -= 1;
+                    
+                    particle.Play();
                 }
                 else if (zyoreimaster.ItemCount == 1)
                 {
@@ -133,14 +139,18 @@ public class InventoryProd : MonoBehaviour
                     haveItemId.Remove("zyoreimaster");
                     Destroy(equipmentItem);
                     equipmentItem = null;
+                    
+                    particle.Play();
                 }
-                particle.Play();
                 break;
             case "energy":
                 Item energy = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == "energy");
                 if (energy.ItemCount >= 2)
                 {
                     energy.ItemCount -= 1;
+                    
+                    FPMovement.isUseEnergy = true;
+                    FPMovement.onece = true;
                 }
                 else if (energy.ItemCount == 1)
                 {
@@ -148,12 +158,17 @@ public class InventoryProd : MonoBehaviour
                     haveItemId.Remove("energy");
                     Destroy(equipmentItem);
                     equipmentItem = null;
+                    
+                    FPMovement.isUseEnergy = true;
+                    FPMovement.onece = true;
                 }
-                FPMovement.isUseEnergy = true;
-                FPMovement.onece = true;
                 break;
             case "ohuda":
-                if(isGool)Debug.Log("Clear!!");
+                if (isGool)
+                {
+                    Debug.Log("Clear!!");
+                    StartCoroutine(FadeOut());
+                }
                 break;
             default:
                 break;
@@ -178,6 +193,40 @@ public class InventoryProd : MonoBehaviour
         {
             showItemNum = Mathf.Clamp(showItemNum, 0, haveItemId.Count - 1);
             UpdateText(haveItemId[showItemNum]);
+        }
+    }
+
+    IEnumerator FadeOut()
+    {
+        Color panelColor = fadePanel.color;
+        panelColor.a = 0;
+        fadePanel.color = panelColor;
+        
+        float elapsedTime = 0;
+        while (elapsedTime < 2)//２はdurationTime
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Clamp01(elapsedTime / 2);
+            panelColor.a = alpha;
+            fadePanel.color = panelColor;
+            yield return null;
+        }
+        yield return StartCoroutine(FadeInText());
+    }
+    IEnumerator FadeInText()
+    {
+        Color textColor = fadeText.color;
+        textColor.a = 0;
+        fadeText.color = textColor;
+        
+        float elapsedTime = 0;
+        while (elapsedTime < 1)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Clamp01(elapsedTime);
+            textColor.a = alpha;
+            fadeText.color = textColor;
+            yield return null;
         }
     }
 }
