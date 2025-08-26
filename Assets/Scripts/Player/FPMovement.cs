@@ -167,12 +167,28 @@ public class FPMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log(other.gameObject.name);
         if (other.gameObject.CompareTag("enemy"))
         {
-            transform.position = new Vector3(0,0,0);
+            Invoke("Damage",0.1f);
         }
+        if (other.gameObject.CompareTag("hokora"))
+        {
+            InventoryProd.isGool = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("hokora"))
+        {
+            InventoryProd.isGool = false;
+        }
+    }
+    void Damage()
+    {
+        transform.position = new Vector3(-2.3f,1.35f,4.2f);
     }
 }

@@ -27,7 +27,9 @@ public class InventoryProd : MonoBehaviour
 
     public Transform cameraroot;//装備するときの親のオブジェクト
     private GameObject equipmentItem = null;//手に持っているアイテム
-    public ParticleSystem particle;
+    public ParticleSystem particle;//除霊マスター
+
+    public bool isGool = false;//ゴールできるかの判定
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Update()
     {
@@ -151,6 +153,7 @@ public class InventoryProd : MonoBehaviour
                 FPMovement.onece = true;
                 break;
             case "ohuda":
+                if(isGool)Debug.Log("Clear!!");
                 break;
             default:
                 break;
