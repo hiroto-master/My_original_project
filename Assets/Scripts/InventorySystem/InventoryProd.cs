@@ -29,11 +29,6 @@ public class InventoryProd : MonoBehaviour
     private GameObject equipmentItem = null;//手に持っているアイテム
     public ParticleSystem particle;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        showItemNum = 0;
-        UpdateText(haveItemId[showItemNum]);//取得したアイテムID
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A) && FPMovement.isOpenInventory)

@@ -30,7 +30,6 @@ public class DoorController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("接触しました");
         if (other.gameObject.CompareTag("eye"))
         {
             isActive = true;
