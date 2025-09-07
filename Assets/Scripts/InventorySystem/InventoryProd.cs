@@ -200,8 +200,8 @@ public class InventoryProd : MonoBehaviour
     {
         fadePanel.gameObject.SetActive(true);
         Color panelColor = fadePanel.color;
-        panelColor.a = 0;
-        fadePanel.color = panelColor;
+        // panelColor.a = 0;
+        // fadePanel.color = panelColor;
         
         float elapsedTime = 0;
         while (elapsedTime < 2)//２はdurationTime
@@ -218,8 +218,8 @@ public class InventoryProd : MonoBehaviour
     {
         fadeText.gameObject.SetActive(true);
         Color textColor = fadeText.color;
-        textColor.a = 0;
-        fadeText.color = textColor;
+        // textColor.a = 0;
+        // fadeText.color = textColor;
         
         float elapsedTime = 0;
         while (elapsedTime < 1)
