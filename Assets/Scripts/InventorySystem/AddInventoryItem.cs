@@ -1,6 +1,7 @@
 using System;
 using System.Linq;//id検索に使用
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AddInventoryItem : MonoBehaviour
 {
@@ -10,15 +11,45 @@ public class AddInventoryItem : MonoBehaviour
     private bool isActive = false;
     private GameObject getItemObject;
 
+    public Transform cameraTransform;
+    float rayDistance = 5f;
+    public Text interactionText;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isActive)
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        RaycastHit hit;
+        bool isHit = Physics.Raycast(ray, out hit, rayDistance);
+
+        if (isHit && hit.collider.CompareTag("item"))
         {
-            string getItemID = getItemObject.GetComponent<GetItem>().ReturnID();
-            AddItem(getItemID);
-            Destroy(getItemObject);
-            isActive = false;
-            getItemObject = null;
+            // アイテムに当たっているので、UIテキストを表示
+            interactionText.gameObject.SetActive(true);
+            interactionText.text = "Eキーで入手";
+
+            // さらにEキーが押されたら、アイテムを拾う
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                getItemObject = hit.collider.gameObject;
+                string getItemID = getItemObject.GetComponent<GetItem>().ReturnID();
+                AddItem(getItemID);
+                Destroy(getItemObject);
+                isActive = false;
+                getItemObject = null;
+            }
+        }
+        else if (isHit && hit.collider.CompareTag("door"))
+        {
+            interactionText.gameObject.SetActive(true);
+            interactionText.text = "Eキーで開閉";
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                hit.collider.GetComponent<DoorController>().AnimateDoor();
+            }
+        }
+        else
+        {
+            // UIテキストを非表示にする
+            interactionText.gameObject.SetActive(false);
         }
     }
 
@@ -34,23 +65,6 @@ public class AddInventoryItem : MonoBehaviour
             Item itemInfo = itemDataProd.ItemData.FirstOrDefault(a => a.ItemId == sendID);//idからアイテムを探す
             itemInfo.ItemCount = 1;
             inventoryProd.haveItemId.Insert(0, sendID);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("item"))
-        {
-            isActive = true;
-            getItemObject = other.gameObject;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("item"))
-        {
-            isActive = false;
-            getItemObject = null;
         }
     }
 }

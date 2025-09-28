@@ -11,36 +11,17 @@ public class DoorController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
-
-    void Update()
+    public void AnimateDoor()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isActive)
+        if (!isOpen)
         {
-            if (!isOpen)
-            {
-                animator.SetBool("isOpenDoor",true);
-                isOpen = true;
-            }
-            else if(isOpen)
-            {
-                animator.SetBool("isOpenDoor",false);
-                isOpen = false;
-            }
+            animator.SetBool("isOpenDoor",true);
+            isOpen = true;
+        }
+        else if(isOpen)
+        {
+            animator.SetBool("isOpenDoor",false);
+            isOpen = false;
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("eye"))
-        {
-            isActive = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("eye"))
-        {
-            isActive = false;
-        }
-    }
-    
 }

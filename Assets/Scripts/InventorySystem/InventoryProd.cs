@@ -148,9 +148,6 @@ public class InventoryProd : MonoBehaviour
                 if (energy.ItemCount >= 2)
                 {
                     energy.ItemCount -= 1;
-                    
-                    FPMovement.isUseEnergy = true;
-                    FPMovement.onece = true;
                 }
                 else if (energy.ItemCount == 1)
                 {
@@ -158,10 +155,8 @@ public class InventoryProd : MonoBehaviour
                     haveItemId.Remove("energy");
                     Destroy(equipmentItem);
                     equipmentItem = null;
-                    
-                    FPMovement.isUseEnergy = true;
-                    FPMovement.onece = true;
                 }
+                FPMovement.currentState = FPMovement.PlayerState.UsedItem;
                 break;
             case "ohuda":
                 if (isGool)

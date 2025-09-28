@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - eye
   - item
   - enemy
   - hokora
+  - door
   layers:
   - Default
   - TransparentFX
