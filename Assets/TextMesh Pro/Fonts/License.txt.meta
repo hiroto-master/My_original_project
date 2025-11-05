@@ -1,9 +1,7 @@
 fileFormatVersion: 2
-guid: f7ada0af4f174f0694ca6a487b8f543d
-ShaderImporter:
+guid: ec16d975ef5b1c34d914fe53fab5e901
+TextScriptImporter:
   externalObjects: {}
-  defaultTextures: []
-  nonModifiableTextures: []
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -12,5 +10,5 @@ AssetOrigin:
   productId: 213198
   packageName: Unity Terrain - HDRP Demo Scene
   packageVersion: 1.0.3
-  assetPath: Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader
+  assetPath: Assets/TextMesh Pro/Fonts/License.txt
   uploadId: 727864

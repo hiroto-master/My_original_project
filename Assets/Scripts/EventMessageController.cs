@@ -7,22 +7,17 @@ using UnityEngine.UI;
 
 public class EventMessageController : MonoBehaviour
 {
-    private Text messageText;
+    public Image background;
+    public Text messageText;
     private bool isNextButtonClicked = false;
     private Coroutine runningCoroutine = null;
     private string currentMessage = null;
     
+    public FPMovement movement;
+    
     private void Start()
     {
-        messageText = GetComponent<Text>();
         
-        string[] conversation = new string[]
-        {
-            "こんにちは！",
-            "これはサンプルメッセージです。",
-            "コルーチンは正常に起動しました。"
-        };
-        StartCoroutine(EventCoroutine(conversation));
     }
     private IEnumerator ShowMessageCoroutine(string message)
     {
@@ -31,12 +26,14 @@ public class EventMessageController : MonoBehaviour
         for (int i = 0; i < message.Length; i++)
         {
             messageText.text += message[i];
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
         runningCoroutine = null;
     }
-    private IEnumerator EventCoroutine(string[] message)　//これを実行させる
+    public IEnumerator EventCoroutine(string[] message)　//これを実行させる
     {
+        movement.isOpenInventory = true;
+        Time.timeScale = 0;
         for (int i = 0; i < message.Length; i++)
         { 
             currentMessage = message[i];
@@ -44,7 +41,9 @@ public class EventMessageController : MonoBehaviour
             yield return new WaitUntil(() => isNextButtonClicked);
             isNextButtonClicked = false;
         }
- 
+        background.gameObject.SetActive(false);
+        Time.timeScale = 1;
+        movement.isOpenInventory = false;
     }
 
     private void Update()
